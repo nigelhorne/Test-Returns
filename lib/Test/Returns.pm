@@ -23,13 +23,12 @@ Test::Returns - Test::Builder-based validation of Return::Set behavior
 
     returns_ok(42, { type => 'integer' }, 'Returns valid integer');
     returns_ok([], { type => 'arrayref' }, 'Returns valid arrayref');
-    returns_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
+    returns_not_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
 
 =head1 DESCRIPTION
 
-Exports the function C<returns_ok>, which asserts that a value satisfies a
-schema using L<Return::Set>. Integrates with Test::Builder for use alongside
-Test::More and friends.
+Exports the function C<returns_ok>, which asserts that a value satisfies a schema using L<Return::Set>.
+Integrates with L<Test::Builder> for use alongside L<Test::Most> and friends.
 
 =head1	METHODS
 
@@ -122,6 +121,10 @@ sub returns_not_ok
 =head1 AUTHOR
 
 Nigel Horne <njh at nigelhorne.com>
+
+=head1	SEE ALSO
+
+L<Test::Builder>
 
 =head1 SUPPORT
 

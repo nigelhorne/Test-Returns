@@ -9,13 +9,12 @@ Test::Returns - Test::Builder-based validation of Return::Set behavior
 
     returns_ok(42, { type => 'integer' }, 'Returns valid integer');
     returns_ok([], { type => 'arrayref' }, 'Returns valid arrayref');
-    returns_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
+    returns_not_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
 
 # DESCRIPTION
 
-Exports the function `returns_ok`, which asserts that a value satisfies a
-schema using [Return::Set](https://metacpan.org/pod/Return%3A%3ASet). Integrates with Test::Builder for use alongside
-Test::More and friends.
+Exports the function `returns_ok`, which asserts that a value satisfies a schema using [Return::Set](https://metacpan.org/pod/Return%3A%3ASet).
+Integrates with [Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder) for use alongside [Test::Most](https://metacpan.org/pod/Test%3A%3AMost) and friends.
 
 # METHODS
 
@@ -39,6 +38,23 @@ Synonym of returns\_isnt
 
 Nigel Horne &lt;njh at nigelhorne.com>
 
-# LICENSE
+# SEE ALSO
 
-Same terms as [Return::Set](https://metacpan.org/pod/Return%3A%3ASet).
+[Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder)
+
+# SUPPORT
+
+This module is provided as-is without any warranty.
+
+# LICENCE AND COPYRIGHT
+
+Copyright 2025 Nigel Horne.
+
+Usage is subject to licence terms.
+
+The licence terms of this software are as follows:
+
+- Personal single user, single computer use: GPL2
+- All other users (including Commercial, Charity, Educational, Government)
+  must apply in writing for a licence for use from Nigel Horne at the
+  above e-mail.
