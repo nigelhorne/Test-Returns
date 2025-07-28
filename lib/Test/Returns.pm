@@ -8,7 +8,7 @@ use Test::Builder;
 use Return::Set qw(set_return);
 use Scalar::Util qw(blessed);
 
-our @EXPORT  = qw(returns_ok returns_is returns_isnt);
+our @EXPORT  = qw(returns_ok returns_not_ok returns_is returns_isnt);
 our $VERSION = '0.01';
 
 my $Test = Test::Builder->new();
@@ -103,6 +103,17 @@ Synonym of returns_is
 sub returns_ok
 {
 	return returns_is(@_);
+}
+
+=head2	returns_not_ok
+
+Synonym of returns_isnt
+
+=cut
+
+sub returns_not_ok
+{
+	return returns_isnt(@_);
 }
 
 1;
