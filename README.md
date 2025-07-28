@@ -1,6 +1,6 @@
 # NAME
 
-Test::Returns - Test::Builder-based validation of Return::Set behavior
+Test::Returns - Verify that a method's output agrees with its specification
 
 # SYNOPSIS
 
@@ -20,7 +20,8 @@ Integrates with [Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder) for 
 
 ## returns\_is($value, $schema, $test\_name)
 
-Passes if `$value` satisfies `$schema` using `Return::Set`. Fails otherwise.
+Passes if `$value` satisfies `$schema` using `Params::Validate::Strict`.
+Fails otherwise.
 
 ## returns\_isnt
 
@@ -40,7 +41,7 @@ Nigel Horne &lt;njh at nigelhorne.com>
 
 # SEE ALSO
 
-[Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder)
+[Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder), [Returns::Set](https://metacpan.org/pod/Returns%3A%3ASet), [Params::Validate::Strict](https://metacpan.org/pod/Params%3A%3AValidate%3A%3AStrict)
 
 # SUPPORT
 

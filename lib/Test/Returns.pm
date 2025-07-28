@@ -7,14 +7,14 @@ use Exporter 'import';
 use Test::Builder;
 use Return::Set qw(set_return);
 
-our @EXPORT  = qw(returns_ok returns_not_ok returns_is returns_isnt);
+our @EXPORT = qw(returns_ok returns_not_ok returns_is returns_isnt);
 our $VERSION = '0.01';
 
 my $Test = Test::Builder->new();
 
 =head1 NAME
 
-Test::Returns - Test::Builder-based validation of Return::Set behavior
+Test::Returns - Verify that a method's output agrees with its specification
 
 =head1 SYNOPSIS
 
@@ -34,7 +34,8 @@ Integrates with L<Test::Builder> for use alongside L<Test::Most> and friends.
 
 =head2 returns_is($value, $schema, $test_name)
 
-Passes if C<$value> satisfies C<$schema> using C<Return::Set>. Fails otherwise.
+Passes if C<$value> satisfies C<$schema> using C<Params::Validate::Strict>.
+Fails otherwise.
 
 =cut
 
@@ -124,7 +125,7 @@ Nigel Horne <njh at nigelhorne.com>
 
 =head1	SEE ALSO
 
-L<Test::Builder>
+L<Test::Builder>, L<Returns::Set>, L<Params::Validate::Strict>
 
 =head1 SUPPORT
 
