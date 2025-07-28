@@ -46,6 +46,8 @@ sub returns_is {
 	my $ok;
 	my $error;
 
+	$test_name ||= 'Value matches schema';
+
 	eval {
 		$ok = set_return($value, $schema) eq $value;
 		1;
@@ -76,6 +78,8 @@ sub returns_isnt
 
 	my $ok;
 	my $error;
+
+	$test_name ||= 'Value does not schema';
 
 	eval {
 		$ok = set_return($value, $schema) ne $value;
