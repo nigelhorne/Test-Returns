@@ -1,6 +1,8 @@
 ---
-name: Perl CI
+# See https://github.com/actions/virtual-environments
+# https://github.com/marketplace/actions/setup-perl-environment
 
+name: Test Code
 on:
   push:
     branches:
@@ -9,48 +11,58 @@ on:
       - '*'
   pull_request:
   schedule:
-    - cron: '9 3 29 * *'
+    - cron: '12 29 3 * *'
 permissions:
   contents: read
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        perl: ['5.32', '5.36', '5.40']
-
-    name: Perl ${{ matrix.perl }} on Ubuntu
-
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        perl: ['5.40', '5.38', '5.36', '5.34', '5.32', '5.30', '5.28', '5.22']
+    name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Perl ${{ matrix.perl }}
+      - uses: actions/checkout@v4
+      - name: Setup Perl
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
-
-      - name: Cache CPAN modules
-        uses: actions/cache@v4
-        with:
-          path: ~/perl5
-          key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/Makefile.PL') }}
-          restore-keys: |
-            ${{ runner.os }}-cpan-${{ matrix.perl }}-
-
-      - name: Install dependencies
-        run: |
-          cpanm --quiet --notest --local-lib=~/perl5 --installdeps .
+      - run: perl -V
+      - name: Install Dependencies
         env:
-          PERL_CARTON_PATH: ~/perl5
-          PERL5LIB: ~/perl5/lib/perl5
-          PATH: ~/perl5/bin:$PATH
-
-      - name: Run tests
+          AUTOMATED_TESTING: 1
         run: |
+          cpanm -iqn ExtUtils::MakeMaker Test::Most
+          cpanm -iqn --skip-satisfied --installdeps --notest .
+      - name: Make Module
+        env:
+          AUTOMATED_TESTING: 1
+          NO_NETWORK_TESTING: 1
+          NONINTERACTIVE_TESTING: 1
+        run: |
+          # find . -name build.log | xargs cat
           perl Makefile.PL
           make
-          make test
+      - name: Run Tests
         env:
-          PERL5LIB: ~/perl5/lib/perl5
-          PATH: ~/perl5/bin:$PATH
+          AUTOMATED_TESTING: 1
+          NO_NETWORK_TESTING: 1
+          NONINTERACTIVE_TESTING: 1
+          # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: prove -l -b t
+        # run: |
+        #   cover -test
+        #   cover -report codecov
+        #   curl -Os https://uploader.codecov.io/latest/macos/codecov
+        #   chmod +x codecov
+        #   ./codecov -t ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Show cpanm build log on failure (Windows)
+        if: runner.os == 'Windows' && failure()
+        shell: pwsh
+        run: Get-Content "$env:USERPROFILE\.cpanm\work\*\build.log" -Tail 100
