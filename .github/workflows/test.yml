@@ -1,0 +1,56 @@
+---
+name: Perl CI
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+  schedule:
+    - cron: '9 3 29 * *'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl: ['5.32', '5.36', '5.40']
+
+    name: Perl ${{ matrix.perl }} on Ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Perl ${{ matrix.perl }}
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      - name: Cache CPAN modules
+        uses: actions/cache@v4
+        with:
+          path: ~/perl5
+          key: ${{ runner.os }}-cpan-${{ matrix.perl }}-${{ hashFiles('**/Makefile.PL') }}
+          restore-keys: |
+            ${{ runner.os }}-cpan-${{ matrix.perl }}-
+
+      - name: Install dependencies
+        run: |
+          cpanm --quiet --notest --local-lib=~/perl5 --installdeps .
+        env:
+          PERL_CARTON_PATH: ~/perl5
+          PERL5LIB: ~/perl5/lib/perl5
+          PATH: ~/perl5/bin:$PATH
+
+      - name: Run tests
+        run: |
+          perl Makefile.PL
+          make
+          make test
+        env:
+          PERL5LIB: ~/perl5/lib/perl5
+          PATH: ~/perl5/bin:$PATH
