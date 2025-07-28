@@ -6,7 +6,6 @@ use warnings;
 use Exporter 'import';
 use Test::Builder;
 use Return::Set qw(set_return);
-use Scalar::Util qw(blessed);
 
 our @EXPORT  = qw(returns_ok returns_not_ok returns_is returns_isnt);
 our $VERSION = '0.01';
