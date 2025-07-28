@@ -11,7 +11,7 @@ on:
       - '*'
   pull_request:
   schedule:
-    - cron: '12 29 3 * *'
+    - cron: '12 3 29 * *'
 permissions:
   contents: read
 jobs:
