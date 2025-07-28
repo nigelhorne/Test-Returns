@@ -3,7 +3,8 @@ package Test::Returns;
 use strict;
 use warnings;
 
-use Exporter 'import';
+use parent 'Exporter';
+
 use Test::Builder;
 use Return::Set qw(set_return);
 
@@ -27,14 +28,14 @@ Test::Returns - Verify that a method's output agrees with its specification
 
 =head1 DESCRIPTION
 
-Exports the function C<returns_ok>, which asserts that a value satisfies a schema using L<Return::Set>.
+Exports the function C<returns_ok>, which asserts that a value satisfies a schema as defined in L<Params::Validate::Strict>.
 Integrates with L<Test::Builder> for use alongside L<Test::Most> and friends.
 
 =head1	METHODS
 
 =head2 returns_is($value, $schema, $test_name)
 
-Passes if C<$value> satisfies C<$schema> using C<Params::Validate::Strict>.
+Passes if C<$value> satisfies C<$schema> using C<Return::Set>.
 Fails otherwise.
 
 =cut
@@ -55,7 +56,7 @@ sub returns_is {
 		$ok = 0;
 	};
 
-	if ($ok) {
+	if($ok) {
 		$Test->ok(1, $test_name);
 	} else {
 		$Test->ok(0, $test_name);
@@ -76,30 +77,28 @@ sub returns_isnt
 	my ($value, $schema, $test_name) = @_;
 
 	my $ok;
-	my $error;
 
-	$test_name ||= 'Value does not schema';
+	$test_name ||= 'Value does not match schema';
 
 	eval {
-		$ok = set_return($value, $schema) ne $value;
-		1;
+		$ok = defined(set_return($value, $schema));
 	} or do {
-		$error = $@;
 		$ok = 0;
 	};
 
-	if ($ok) {
-		$Test->ok(0, $test_name);
+	if($ok) {
+		$Test->ok(0, $test_name);	# Value matched schema — test fails
 	} else {
-		$Test->ok(1, $test_name);
+		$Test->ok(1, $test_name);	# Value did not match — test passes
 	}
 
-	return $ok;
+	return !$ok;
 }
 
-=head2	returns_ok
+=head2 returns_ok($value, $schema, $test_name)
 
-Synonym of returns_is
+Alias for C<returns_is>.
+Provided for naming symmetry and clarity.
 
 =cut
 

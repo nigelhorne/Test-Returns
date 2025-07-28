@@ -13,23 +13,24 @@ Test::Returns - Verify that a method's output agrees with its specification
 
 # DESCRIPTION
 
-Exports the function `returns_ok`, which asserts that a value satisfies a schema using [Return::Set](https://metacpan.org/pod/Return%3A%3ASet).
+Exports the function `returns_ok`, which asserts that a value satisfies a schema as defined in [Params::Validate::Strict](https://metacpan.org/pod/Params%3A%3AValidate%3A%3AStrict).
 Integrates with [Test::Builder](https://metacpan.org/pod/Test%3A%3ABuilder) for use alongside [Test::Most](https://metacpan.org/pod/Test%3A%3AMost) and friends.
 
 # METHODS
 
 ## returns\_is($value, $schema, $test\_name)
 
-Passes if `$value` satisfies `$schema` using `Params::Validate::Strict`.
+Passes if `$value` satisfies `$schema` using `Return::Set`.
 Fails otherwise.
 
 ## returns\_isnt
 
 Opposite of returns\_is
 
-## returns\_ok
+## returns\_ok($value, $schema, $test\_name)
 
-Synonym of returns\_is
+Alias for `returns_is`.
+Provided for naming symmetry and clarity.
 
 ## returns\_not\_ok
 

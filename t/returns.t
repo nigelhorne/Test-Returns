@@ -15,4 +15,6 @@ returns_not_ok("forty", { type => 'integer' }, 'String is not integer');
 returns_is([1,2], { type => 'arrayref' }, 'Arrayref matches');
 returns_isnt("nope", { type => 'hashref' }, 'String is not hashref');
 
+returns_isnt('abc', { type => 'integer' }, 'String should not match integer');
+
 done_testing();
