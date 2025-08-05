@@ -46,8 +46,6 @@ sub returns_is {
 	my $ok;
 	my $error;
 
-	$test_name ||= 'Value matches schema';
-
 	eval {
 		$ok = set_return($value, $schema) eq $value;
 		1;
@@ -55,6 +53,8 @@ sub returns_is {
 		$error = $@;
 		$ok = 0;
 	};
+
+	$test_name ||= 'Value matches schema';
 
 	if($ok) {
 		$Test->ok(1, $test_name);
@@ -78,13 +78,13 @@ sub returns_isnt
 
 	my $ok;
 
-	$test_name ||= 'Value does not match schema';
-
 	eval {
 		$ok = defined(set_return($value, $schema));
 	} or do {
 		$ok = 0;
 	};
+
+	$test_name ||= 'Value does not match schema';
 
 	if($ok) {
 		$Test->ok(0, $test_name);	# Value matched schema — test fails
