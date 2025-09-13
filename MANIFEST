@@ -6,4 +6,5 @@ MANIFEST			This list of files
 README.md
 t/eof.t
 t/eol.t
+t/pod.t
 t/returns.t
