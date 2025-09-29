@@ -9,7 +9,7 @@ use Test::Builder;
 use Return::Set qw(set_return);
 
 our @EXPORT = qw(returns_ok returns_not_ok returns_is returns_isnt);
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $Test = Test::Builder->new();
 
