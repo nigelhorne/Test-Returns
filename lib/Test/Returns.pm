@@ -47,7 +47,7 @@ sub returns_is {
 	my $error;
 
 	eval {
-		if($value) {
+		if(defined($value)) {
 			$ok = set_return($value, $schema) eq $value;
 		} else {
 			set_return(undef, $schema);
