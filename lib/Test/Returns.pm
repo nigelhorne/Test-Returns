@@ -5,6 +5,13 @@ use warnings;
 
 use parent 'Exporter';
 
+# TODO: add a returns_undef function
+# e.g.
+# returns_undef {
+    # $sc->_find_match({});
+# } '_find_match returns undef when no interactions exist';
+# 
+
 use Test::Builder;
 use Return::Set qw(set_return);
 
