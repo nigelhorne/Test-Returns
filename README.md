@@ -11,6 +11,10 @@ Test::Returns - Verify that a method's output agrees with its specification
     returns_ok([], { type => 'arrayref' }, 'Returns valid arrayref');
     returns_not_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
 
+# VERSION
+
+Version 0.03
+
 # DESCRIPTION
 
 Exports the function `returns_ok`, which asserts that a value satisfies a schema as defined in [Params::Validate::Strict](https://metacpan.org/pod/Params%3A%3AValidate%3A%3AStrict).

@@ -16,7 +16,6 @@ use Test::Builder;
 use Return::Set qw(set_return);
 
 our @EXPORT = qw(returns_ok returns_not_ok returns_is returns_isnt);
-our $VERSION = '0.02';
 
 my $Test = Test::Builder->new();
 
@@ -32,6 +31,14 @@ Test::Returns - Verify that a method's output agrees with its specification
     returns_ok(42, { type => 'integer' }, 'Returns valid integer');
     returns_ok([], { type => 'arrayref' }, 'Returns valid arrayref');
     returns_not_ok("bad", { type => 'arrayref' }, 'Fails (expected arrayref)');
+
+=head1 VERSION
+
+Version 0.03
+
+=cut
+
+our $VERSION = '0.03';
 
 =head1 DESCRIPTION
 
