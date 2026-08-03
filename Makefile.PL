@@ -32,7 +32,7 @@ WriteMakefile(
 	}, PREREQ_PM => {
 		'Carp' => 0,
 		'Exporter' => 0,
-		'Return::Set' => 0.01,
+		'Return::Set' => 0.03,
 	}, dist => $dist,
 	clean => { FILES => 'Test-Returns-*' },
 	# META_ADD => {
