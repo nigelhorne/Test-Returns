@@ -11,6 +11,7 @@ on 'configure' => sub {
 };
 
 on 'test' => sub {
+	requires 'IPC::System::Simple';
 	requires 'Test::DescribeMe';
 	requires 'Test::Most';
 	requires 'Test::Needs';
